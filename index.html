@@ -1560,24 +1560,18 @@
                 };
 
                 /* ════ PIN AUTH ════ */
-                var OWNER_PIN = loadLS('owner_pin', '1234');
+                var OWNER_PIN = '1234';
                 var isOwner = false;
                 var pinBuffer = [];
                 var pinMode = 'login';
                 // 'login' | 'change'
 
+                var _memStore = {};
                 function loadLS(k, def) {
-                    try {
-                        var v = localStorage.getItem('pcto_' + k);
-                        return v ? JSON.parse(v) : def
-                    } catch (e) {
-                        return def
-                    }
+                    return k in _memStore ? _memStore[k] : def;
                 }
                 function saveLS(k, v) {
-                    try {
-                        localStorage.setItem('pcto_' + k, JSON.stringify(v))
-                    } catch (e) {}
+                    _memStore[k] = v;
                 }
 
                 $('#lock-btn').on('click', function() {
